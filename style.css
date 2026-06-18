@@ -27,9 +27,9 @@
   --pink: #ff4081;
   --plum: #6a5cff;
   --shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
-  --radius-xl: 0;
-  --radius-lg: 0;
-  --radius-md: 0;
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 12px;
   --scroll-shift: 0;
   --scroll-hue: 0deg;
 }
@@ -56,7 +56,6 @@ body {
   background-attachment: fixed;
   transition: background 0.35s ease, filter 0.35s ease;
   filter: hue-rotate(var(--scroll-hue));
-  cursor: auto;
 }
 
 a {
@@ -65,9 +64,9 @@ a {
 }
 
 .page-shell {
-  width: min(1100px, calc(100% - 32px));
+  width: min(1280px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 28px 0 72px;
+  padding: 40px 0 120px;
 }
 
 .cursor-ring {
@@ -83,9 +82,7 @@ a {
     0 0 0 1px rgba(255, 255, 255, 1),
     0 4px 14px rgba(51, 65, 85, 0.18);
   pointer-events: none;
-  opacity: 1;
   transform: translate(-50%, -50%);
-  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease;
   z-index: 9999;
 }
 
@@ -103,8 +100,7 @@ a {
 
 .topbar,
 .topnav,
-.contact-links,
-.color-system {
+.contact-links {
   display: flex;
   flex-wrap: wrap;
 }
@@ -113,7 +109,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 34px;
+  margin-bottom: 54px;
 }
 
 .brand {
@@ -126,13 +122,13 @@ a {
 .topnav a,
 .contact-links a {
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.72);
 }
 
 .brand-mark {
   padding: 8px 14px;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-size: 0.98rem;
 }
 
@@ -158,28 +154,189 @@ a {
   font-size: 0.94rem;
 }
 
-.hero,
 .profile-intro-board,
-.archive-layout,
-.board-grid,
-.credential-grid {
+.preview-gallery-grid,
+.record-columns {
   display: grid;
-  gap: 20px;
+  gap: 24px;
 }
 
 .hero {
-  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
-  align-items: center;
+  display: block;
   min-height: calc(100vh - 148px);
-  padding: 42px 8px 84px;
+  padding: 0;
 }
 
-.hero-copy {
-  align-self: center;
-  padding-bottom: 0;
-  transform: translateY(-28px);
+/* ── NEW COVER HERO ─────────────────────────────── */
+.hero-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(100vh - 148px);
+  padding: 32px 0 32px;
+  border: 1px solid rgba(63,81,181,0.14);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 2px 40px rgba(63,81,181,0.06);
+  overflow: hidden;
+  position: relative;
 }
 
+/* 미세한 가로줄 텍스처 */
+.hero-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(63,81,181,0.015) 3px,
+    rgba(63,81,181,0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-cover > * { position: relative; z-index: 1; }
+
+/* 상단 메타 바 */
+.cover-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 48px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(63,81,181,0.1);
+  padding-bottom: 20px;
+}
+
+.cover-divider {
+  color: var(--lime);
+  font-size: 0.9rem;
+}
+
+.cover-name-en {
+  font-family: "MaruBuri", sans-serif;
+  font-weight: 600;
+  color: var(--indigo);
+  letter-spacing: 0.08em;
+}
+
+.cover-role {
+  margin-left: auto;
+  background: var(--lime);
+  color: #3d4800;
+  padding: 5px 16px;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+/* 메인 타이포 */
+.cover-typo-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 48px;
+  gap: 0;
+  line-height: 1;
+}
+
+.cover-word-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.cover-word-row-right {
+  justify-content: flex-end;
+}
+
+.cover-word {
+  font-family: "MaruBuri", sans-serif;
+  font-weight: 600;
+  font-size: clamp(7.5rem, 25vw, 19rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  display: block;
+}
+
+/* P만 세리프 + 더 크게 */
+.cover-P {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.22em;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.cover-word-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--indigo);
+}
+
+.cover-word-fill {
+  color: var(--indigo);
+}
+
+/* Brand Design 태그 — pill 말고 심플한 사각 태그 */
+.cover-accent-tag {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+  color: var(--pink);
+  padding: 6px 16px;
+  border: 1.5px solid var(--pink);
+  border-radius: 4px;
+  margin-bottom: 1.4rem;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  background: rgba(255,64,129,0.04);
+}
+
+/* 하단 바 */
+.cover-bottom-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 20px 48px 0;
+  border-top: 1px solid rgba(63,81,181,0.1);
+  font-size: 0.8rem;
+  color: var(--muted);
+  gap: 24px;
+}
+
+.cover-bottom-bar p { margin: 2px 0; }
+
+.cover-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--pink);
+  margin-bottom: 4px !important;
+}
+
+.cover-slogan {
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(0.85rem, 1.1vw, 0.98rem);
+  color: var(--indigo);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.cover-bottom-right { text-align: right; }
+
+/* ── KEEP THESE for rest of page ─────────────────── */
 .section-kicker,
 .panel-label {
   margin: 0;
@@ -188,64 +345,17 @@ a {
   text-transform: uppercase;
 }
 
-.hero-slogan {
-  margin: 0;
-  color: var(--text);
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
-  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1.35;
-}
-
-.hero-slogan-en {
-  margin: 8px 0 0;
-  color: var(--plum);
-  font-family: "Brush Script MT", "Segoe Script", "Apple Chancery", cursive;
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
-  font-style: italic;
-  line-height: 1.4;
-}
-
 .hero h1,
 .section-heading h2,
 .panel h3,
 .project-card h3,
-.contact-card h2 {
+.contact-card h2,
+.gallery-header-wrapper h2 {
   margin: 0;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--heading);
-}
-
-.hero h1 {
-  max-width: 17ch;
-  margin-top: 14px;
-  font-size: clamp(1.22rem, 2.1vw, 1.62rem);
-  line-height: 1.48;
-}
-
-.hero-text,
-.panel p,
-.project-card p,
-.contact-card p,
-.color-block span,
-.section-side-note {
-  color: var(--muted);
-  line-height: 1.82;
-}
-
-.hero-text {
-  max-width: 580px;
-  margin-top: 16px;
-  font-size: 0.94rem;
-}
-
-.hero-summary {
-  display: grid;
-  gap: 12px;
-  align-self: center;
-  justify-items: center;
 }
 
 .face-card,
@@ -258,13 +368,6 @@ a {
   background: var(--surface);
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
-}
-
-.face-card,
-.panel,
-.project-card,
-.contact-card {
-  padding: 18px;
 }
 
 .face-orbit-scene {
@@ -285,7 +388,6 @@ a {
   border: 0;
   background: transparent;
   box-shadow: none;
-  overflow: visible;
 }
 
 .face-core {
@@ -315,7 +417,6 @@ a {
   inset: 50%;
   border: 1px solid rgba(90, 124, 154, 0.22);
   border-radius: 50%;
-  transform-origin: center;
 }
 
 .orbit-one {
@@ -360,13 +461,15 @@ a {
   animation: orbit-spin-reverse 19s linear infinite;
 }
 
+/* 🛠️ 기본 공통 섹션 상단 여백 통일 */
 .section {
-  padding-top: 68px;
+  padding-top: 160px;
 }
 
+/* 🛠️ Profile 섹션 하단 여백 대폭 확장 (Experience Board 와의 간격 보호) */
 .profile-intro-section {
-  padding-top: 10px;
-  padding-bottom: 42px;
+  padding-top: 20px;
+  padding-bottom: 160px; 
 }
 
 .profile-intro-board {
@@ -378,7 +481,7 @@ a {
 
 .profile-identity h2 {
   margin: 8px 0 0;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-size: clamp(1.8rem, 2.8vw, 2.5rem);
   line-height: 1.12;
   letter-spacing: -0.04em;
@@ -409,7 +512,7 @@ a {
   display: block;
   margin-top: 8px;
   color: var(--text);
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-size: 1.02rem;
   line-height: 1.5;
   word-break: break-word;
@@ -417,7 +520,6 @@ a {
 
 .profile-education {
   grid-column: 1 / 2;
-  padding-top: 2px;
 }
 
 .tool-stack {
@@ -438,184 +540,162 @@ a {
   color: #ffffff;
   text-align: center;
   border-radius: 14px;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-size: 1rem;
-  line-height: 1;
   box-shadow: 0 10px 18px rgba(17, 17, 17, 0.12);
 }
 
-.section-heading {
-  margin-bottom: 24px;
+/* 🛠️ Experience Board 섹션 상단 여백 */
+.detail-section {
+  padding-top: 160px;
 }
 
-.section-heading h2 {
-  max-width: 14ch;
-  margin-top: 8px;
-  font-size: clamp(1.16rem, 1.9vw, 1.48rem);
-  line-height: 1.42;
+.gallery-header-wrapper {
+  margin-bottom: 44px;
 }
 
-.section-heading.split {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 20px;
+.gallery-header-wrapper h2 {
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  margin: 6px 0 12px;
 }
 
-.section-side-note {
-  max-width: 360px;
+.gallery-sub-caption {
   margin: 0;
-  font-size: 0.9rem;
+  color: var(--muted);
+  font-size: 0.96rem;
 }
 
-#story {
-  padding-top: 92px;
+.preview-gallery-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
 }
 
-.panel h3,
-.board-card h3,
-.insight-card h3,
-.credential-card h3 {
-  margin-top: 10px;
-  font-size: 0.98rem;
-  line-height: 1.55;
-}
-
-.panel p,
-.insight-card p,
-.board-card p,
-.credential-card p {
-  margin-top: 12px;
-  font-size: 0.92rem;
-}
-
-.archive-section {
+.gallery-preview-card {
   position: relative;
-  padding-top: 72px;
+  min-height: 330px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(63, 81, 181, 0.05);
+  border: 1px solid rgba(63, 81, 181, 0.08);
 }
 
-.archive-section::before {
+.gallery-preview-card.tall {
+  grid-row: span 2;
+  min-height: 560px;
+}
+
+.gallery-preview-card .card-image-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #eaeefc;
+  transition: transform 0.5s ease;
+  z-index: 1;
+}
+
+.gallery-preview-card:hover .card-image-bg {
+  transform: scale(1.03);
+}
+
+.gallery-preview-card::after {
   content: "";
   position: absolute;
-  left: 50%;
-  top: 26px;
-  width: min(1100px, calc(100vw - 40px));
-  height: 620px;
-  border: 1px solid rgba(63, 81, 181, 0.18);
-  border-radius: 999px;
-  transform: translateX(-50%);
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(15,23,42,0.1) 40%, rgba(15,23,42,0.85) 100%);
+  z-index: 2;
   pointer-events: none;
 }
 
-.archive-layout {
-  grid-template-columns: 1fr 1fr;
-  align-items: start;
+.card-top-bar {
   position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.insight-card,
-.board-card,
-.credential-card,
-.archive-bridge {
-  position: relative;
-  padding: 24px;
-  border: 1px solid rgba(63, 81, 181, 0.14);
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: 0 18px 32px rgba(63, 81, 181, 0.06);
-  backdrop-filter: blur(14px);
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.insight-card.small {
-  min-height: 190px;
+.tag-bubble {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--indigo);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.insight-card.focus {
-  min-height: 286px;
-  margin-top: -28px;
-}
-
-.metric-ring {
-  width: 170px;
-  aspect-ratio: 1;
-  margin-top: 10px;
+.card-icon-badge {
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background:
-    conic-gradient(from 90deg, rgba(63, 81, 181, 0.9) 0 80%, rgba(63, 81, 181, 0.14) 80% 100%);
+  background: var(--pink);
+  color: #ffffff;
   display: grid;
   place-items: center;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
 }
 
-.metric-ring::before {
-  content: "";
-  width: 136px;
-  height: 136px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.96);
-  position: absolute;
-}
-
-.metric-ring div {
+.card-bottom-content {
   position: relative;
-  z-index: 1;
-  text-align: center;
+  z-index: 3;
+  color: #ffffff;
 }
 
-.metric-ring span {
-  display: block;
-  color: var(--muted);
+.card-category {
+  margin: 0 0 6px;
   font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--lime);
+  text-transform: uppercase;
 }
 
-.metric-ring strong {
-  display: block;
-  margin-top: 6px;
-  color: var(--indigo);
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
-  font-size: 2rem;
+.card-bottom-content h3 {
+  margin: 0 0 10px;
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  color: #ffffff !important;
+  line-height: 1.35;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
-.archive-bridge {
-  grid-column: 1 / -1;
-  margin: 18px auto 0;
-  max-width: 640px;
-  text-align: center;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
+.card-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 
-.archive-bridge h2 {
-  max-width: none;
-  margin: 12px auto 0;
-  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-  line-height: 1.45;
+.gallery-preview-card.fade-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.6, 0.3, 1), transform 0.7s cubic-bezier(0.2, 0.6, 0.3, 1);
 }
 
-.archive-bridge h2 .accent,
-.archive-bridge .accent {
-  color: #58a6ff;
+.gallery-preview-card.fade-card.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.archive-bridge p {
-  margin: 12px auto 0;
-  max-width: 420px;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.detail-section {
-  padding-top: 92px;
-}
-
-.board-grid {
-  grid-template-columns: 0.62fr 1.18fr 1fr;
-  gap: 18px;
-  align-items: start;
-}
-
+/* 🛠️ Color System 섹션 상단 여백 확정 */
 .palette-section {
-  padding-top: 84px;
+  padding-top: 160px;
 }
 
 .palette-layout {
@@ -625,13 +705,9 @@ a {
   align-items: start;
 }
 
-.palette-copy {
-  padding-top: 8px;
-}
-
 .palette-copy h2 {
   margin: 8px 0 0;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-size: clamp(2.4rem, 4.8vw, 4.6rem);
   line-height: 0.95;
   letter-spacing: -0.06em;
@@ -649,59 +725,32 @@ a {
 .color-system.restore {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
-  align-items: stretch;
   overflow: hidden;
   box-shadow: 0 22px 44px rgba(63, 81, 181, 0.08);
+  border-radius: var(--radius-lg);
 }
 
 .color-system.restore .color-block {
   min-height: 184px;
-  margin-top: 0;
-  border-width: 0;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-  overflow: hidden;
+  padding: 24px 28px;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(230px, 1.1fr);
+  grid-template-columns: minmax(0, 0.9.fr) minmax(230px, 1.1fr);
   align-items: center;
   gap: 20px;
-  padding: 24px 28px;
-}
-
-.color-system.restore .color-block::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 58%);
-  pointer-events: none;
-}
-
-.color-system.restore .panel-label,
-.color-system.restore .color-block span {
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.color-meta {
-  position: relative;
-  z-index: 1;
+  border-radius: 0;
+  border: 0;
 }
 
 .color-meta strong {
   display: block;
   margin-top: 10px;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
+  font-family: "MaruBuri", sans-serif;
   font-size: clamp(1.5rem, 2.4vw, 2.15rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
 }
 
 .color-system.restore .color-block span {
-  position: relative;
-  z-index: 1;
-  margin: 0;
   font-size: 0.98rem;
-  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .color-system.restore .indigo-block {
@@ -710,7 +759,6 @@ a {
 
 .color-system.restore .lime-block {
   background: linear-gradient(135deg, #dce775 0%, #edf59b 100%);
-  color: #4d5468;
 }
 
 .color-system.restore .lime-block .panel-label,
@@ -723,413 +771,243 @@ a {
   background: linear-gradient(135deg, #ff4081 0%, #ff77a7 100%);
 }
 
-.board-card {
-  min-height: 210px;
-  padding: 22px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow:
-    0 18px 28px rgba(63, 81, 181, 0.05),
-    inset 0 0 0 1px rgba(63, 81, 181, 0.08);
+/* 🛠️ Projects 무한 롤링 섹션 상단 여백 유지 */
+.portfolio-project-section {
+  padding-top: 160px;
 }
 
-.board-card.tall {
-  grid-row: span 2;
-  min-height: 438px;
-}
-
-.board-feature,
-.board-note {
-  display: grid;
-  align-content: space-between;
-  min-height: 192px;
-  background: linear-gradient(180deg, rgba(63, 81, 181, 0.96), rgba(78, 94, 195, 0.92));
-  color: #ffffff;
-  box-shadow: 0 18px 30px rgba(63, 81, 181, 0.16);
-}
-
-.board-feature .panel-label,
-.board-note .panel-label,
-.board-feature h3,
-.board-note h3 {
-  color: #ffffff;
-}
-
-.board-feature h3,
-.board-note h3 {
-  margin: 0;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
-  font-size: 1.35rem;
-  line-height: 1.2;
-}
-
-.board-note {
-  background: linear-gradient(180deg, rgba(255, 64, 129, 0.92), rgba(255, 118, 166, 0.88));
-}
-
-.board-card.compact {
-  min-height: 210px;
-}
-
-.board-card.wide {
-  grid-column: span 2;
-}
-
-.info-list,
-.number-stack {
-  margin: 14px 0 0;
-  padding-left: 18px;
-  color: var(--text);
-  line-height: 1.8;
-}
-
-.info-list li,
-.number-stack li {
-  margin-bottom: 6px;
-}
-
-.project-heading {
-  text-align: center;
-  max-width: 540px;
-  margin: 0 auto 28px;
-}
-
-.project-heading h2 {
-  max-width: none;
-}
-
-.project-intro {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
-
-.overview-orbit {
+.project-preview-stage {
   position: relative;
+  padding: clamp(22px, 4vw, 42px) clamp(18px, 4vw, 36px);
+}
+
+.preview-tabs {
   display: grid;
-  grid-template-columns: 180px minmax(240px, 1fr) 180px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 42px;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 0 42px;
-}
-
-.overview-line {
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(220, 231, 117, 0.42), rgba(63, 81, 181, 0.42), rgba(255, 64, 129, 0.34));
-  transform: translateY(-50%);
-}
-
-.overview-node {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
+  gap: 18px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
-.overview-node.side {
-  width: 132px;
-  height: 132px;
-  margin: 0 auto;
-  border-radius: 50%;
-  border: 1px solid rgba(63, 81, 181, 0.28);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 16px 28px rgba(63, 81, 181, 0.08);
+.preview-tabs strong {
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--heading);
 }
 
-.overview-node.side strong,
-.overview-core strong {
-  display: block;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
-  color: var(--indigo);
+.preview-row {
+  display: grid;
+  grid-template-columns: 42px repeat(3, minmax(0, 1fr)) 42px;
+  gap: clamp(12px, 2vw, 24px);
+  align-items: center;
 }
 
-.overview-node.side strong {
-  font-size: 1.8rem;
-  line-height: 1;
-}
-
-.overview-node.side span,
-.overview-core span {
-  display: block;
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.45;
-}
-
-.overview-node.center {
-  min-height: 250px;
-}
-
-.overview-core {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
+.preview-arrow {
+  width: 34px;
+  height: 34px;
   display: grid;
   place-items: center;
-  text-align: center;
-  background:
-    radial-gradient(circle, rgba(63, 81, 181, 0.96) 0 42%, rgba(63, 81, 181, 0.26) 43% 61%, rgba(63, 81, 181, 0.08) 62% 100%);
-  box-shadow:
-    0 18px 40px rgba(63, 81, 181, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.65);
-}
-
-.overview-core .panel-label {
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.overview-core strong {
-  font-size: 1.7rem;
-  color: #ffffff;
-}
-
-.overview-core span {
-  color: rgba(255, 255, 255, 0.9);
-  margin-top: 4px;
-}
-
-.credential-grid.circles {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px;
-  max-width: 980px;
-  margin: 18px auto 0;
-}
-
-.credential-bubble {
-  display: grid;
-  place-items: center;
-}
-
-.bubble-circle {
-  width: 180px;
-  height: 180px;
-  padding: 22px;
+  border: 1px solid var(--line);
   border-radius: 50%;
-  border: 1px solid rgba(63, 81, 181, 0.32);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.preview-card.fade-card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 290px;
+  padding: 18px 16px 16px;
+  border-radius: var(--radius-xl);
   background: rgba(255, 255, 255, 0.82);
-  display: grid;
-  place-items: center;
-  text-align: center;
-  box-shadow: 0 16px 28px rgba(63, 81, 181, 0.08);
+  box-shadow: 0 18px 28px rgba(63, 81, 181, 0.08);
+  opacity: 0;
+  transform: translateY(45px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
 }
 
-.bubble-circle strong {
-  display: block;
-  color: var(--indigo);
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
-  font-size: 0.94rem;
-  line-height: 1.5;
+.preview-card.fade-card.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.bubble-circle span {
-  display: block;
-  margin-top: 8px;
-  color: var(--muted);
+.preview-badge {
+  justify-self: start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--indigo);
   font-size: 0.76rem;
-  line-height: 1.55;
+  font-weight: 700;
 }
 
+.preview-card img {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  padding: 0 8px;
+}
+
+.preview-meta h3 {
+  margin: 0;
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+}
+
+/* 🛠️ 자격증/수상 실적(Records) 영역 위쪽 상단 마진 대폭 확장 */
 .record-columns {
   display: grid;
   grid-template-columns: 0.62fr 1.18fr 1fr;
   gap: 18px;
-  margin-top: 30px;
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
+  margin-top: 160px; 
 }
 
 .credential-card {
   min-height: 220px;
   padding: 22px;
-  border: 0;
   background: #ffffff;
-  box-shadow:
-    0 12px 24px rgba(63, 81, 181, 0.08),
-    0 0 0 1px rgba(203, 214, 255, 0.72);
-  transform: none;
+  box-shadow: 0 12px 24px rgba(63, 81, 181, 0.08);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(203, 214, 255, 0.72);
 }
 
 .credential-card.wide {
-  background: #ffffff;
   grid-row: span 2;
   min-height: 458px;
 }
 
-.credential-card .panel-label {
-  color: var(--indigo);
-}
-
-.credential-card::before {
-  content: "";
-  display: block;
-  width: 54px;
-  height: 10px;
-  margin: -2px auto 14px 0;
-  border-radius: 999px;
-  background: rgba(63, 81, 181, 0.16);
-}
-
 .number-stack {
-  display: grid;
-  gap: 8px;
-  margin-top: 10px;
+  margin: 14px 0 0;
   padding-left: 20px;
-}
-
-.number-stack li {
-  padding: 6px 0;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .credential-feature {
   display: grid;
   align-content: space-between;
-  min-height: 220px;
   background: linear-gradient(180deg, rgba(63, 81, 181, 0.96), rgba(78, 94, 195, 0.92));
   color: #ffffff;
-  box-shadow: 0 18px 30px rgba(63, 81, 181, 0.16);
 }
 
-.credential-feature .panel-label,
 .credential-feature h3 {
+  font-family: "MaruBuri", sans-serif;
   color: #ffffff;
-}
-
-.credential-feature h3 {
-  margin: 0;
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
   font-size: 1.35rem;
-  line-height: 1.2;
 }
 
-.credential-mini {
-  min-height: 160px;
-}
-
-.credential-mini strong {
-  display: block;
-  margin-top: 10px;
-  color: var(--heading);
-  font-family: "MaruBuri", "NoonnuBasicGothic", sans-serif;
-  font-size: 1.2rem;
-}
-
-.credential-mini span {
-  display: block;
-  margin-top: 10px;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.credential-mini.accent .panel-label {
-  color: var(--pink);
-}
-
-.credential-mini.accent::before {
-  background: rgba(255, 64, 129, 0.18);
-}
-
-.record-columns .credential-card:last-child .panel-label {
-  color: var(--pink);
-}
-
-.record-columns .credential-card:last-child::before {
-  background: rgba(255, 64, 129, 0.18);
-}
-
+/* 🛠️ 맨 하단 Contact 카드 위쪽 마진 동일하게 160px로 맞춰서 넓혀줌 */
 .contact-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-  gap: 20px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(42, 184, 245, 0.08));
+  padding: 34px 40px;
+  margin-top: 160px; 
 }
 
-.contact-card h2 {
-  margin-top: 8px;
-  font-size: clamp(1.16rem, 1.9vw, 1.42rem);
-  line-height: 1.5;
+.contact-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-copy p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--muted);
 }
 
 .contact-links {
-  gap: 10px;
-  align-content: start;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .contact-links a {
-  padding: 10px 12px;
-  font-size: 0.9rem;
-  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 0.92rem;
+  color: var(--text);
+  white-space: nowrap;
 }
 
+/* 📱 미디어 쿼리 최적화 간격제어 */
 @media (max-width: 920px) {
+  .section,
+  .detail-section,
+  .palette-section,
+  .portfolio-project-section {
+    padding-top: 100px;
+  }
+
+  .profile-intro-section {
+    padding-bottom: 100px; 
+  }
+
+  .record-columns {
+    margin-top: 100px;
+  }
+
   .hero,
   .profile-intro-board,
-  .archive-layout,
-  .board-grid,
-  .palette-layout,
-  .record-columns,
-  .contact-card {
+  .preview-gallery-grid,
+  .record-columns {
     grid-template-columns: 1fr;
   }
 
-  .section-heading.split {
+  .cover-meta-bar,
+  .cover-bottom-bar {
+    padding: 0 20px;
+  }
+
+  .cover-typo-block {
+    padding: 0 16px;
+  }
+
+  .cover-bottom-bar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
   }
 
-  .hero h1,
-  .section-heading h2,
-  .contact-card h2 {
-    max-width: none;
+  .cover-bottom-right { text-align: left; }
+
+  .cover-accent-pill {
+    font-size: 1rem;
+    padding: 6px 14px;
   }
 
-  .face-orbit-scene {
-    min-height: 340px;
+  .contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 30px;
+    margin-top: 100px;
   }
 
-  .board-card.tall {
-    grid-row: auto;
-    min-height: auto;
-  }
-
-  .board-card.wide,
-  .credential-card.wide {
-    grid-column: auto;
-    grid-row: auto;
-    min-height: auto;
-  }
-
-  .overview-orbit {
+  .contact-links {
     grid-template-columns: 1fr;
-    gap: 18px;
+    width: 100%;
   }
 
-  .overview-line {
+  .gallery-preview-card.tall {
+    grid-row: auto;
+    min-height: 380px;
+  }
+
+  .preview-tabs,
+  .preview-row {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-arrow {
     display: none;
   }
 
-  .credential-grid.circles {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .credential-card,
   .credential-card.wide {
-    transform: none;
-  }
-
-  .color-system.restore .color-block {
-    grid-template-columns: 1fr;
+    grid-row: auto;
+    min-height: auto;
   }
 
   .profile-contact-grid,
@@ -1142,7 +1020,6 @@ a {
 @media (max-width: 640px) {
   .page-shell {
     width: min(100% - 20px, 1100px);
-    padding-top: 20px;
   }
 
   .topbar {
@@ -1150,114 +1027,161 @@ a {
     align-items: flex-start;
   }
 
-  .hero {
-    min-height: calc(100vh - 150px);
-    padding-top: 24px;
-    padding-bottom: 48px;
+  .cover-meta-bar {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .hero-copy {
-    transform: none;
-  }
-
-  .profile-contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .tool-badges span {
-    min-width: 64px;
-    padding: 12px 10px;
-  }
-
-  .hero h1 {
-    max-width: 16ch;
-    font-size: clamp(1.08rem, 4.6vw, 1.34rem);
-  }
-
-  .hero-slogan {
-    font-size: clamp(1.35rem, 6vw, 1.85rem);
-  }
-
-  .face-orbit-scene,
-  .face-card,
-  .panel,
-  .project-card,
-  .contact-card,
-  .color-block {
-    padding: 18px;
-  }
-
-  .face-card {
-    width: min(100%, 320px);
-    padding: 0;
-  }
-
-  .section {
-    padding-top: 64px;
-  }
-
-  #story {
-    padding-top: 88px;
-  }
-
-  .archive-section::before {
-    height: 520px;
-  }
-
-  .insight-card,
-  .board-card,
-  .credential-card {
-    padding: 18px;
-  }
-
-  .metric-ring {
-    width: 140px;
-  }
-
-  .metric-ring::before {
-    width: 112px;
-    height: 112px;
-  }
-
-  .credential-grid.circles {
-    grid-template-columns: 1fr;
-  }
-
-  .palette-copy h2 {
-    font-size: clamp(2rem, 10vw, 3rem);
-  }
-
-  .bubble-circle {
-    width: 160px;
-    height: 160px;
-  }
-
-  .overview-core {
-    width: 190px;
-    height: 190px;
-  }
-
-  .record-columns {
-    padding: 18px;
-  }
+  .cover-role { margin-left: 0; }
 }
 
 @keyframes orbit-spin {
-  from {
-    transform: rotate(0deg) translateY(-150px);
-  }
-
-  to {
-    transform: rotate(360deg) translateY(-150px);
-  }
+  from { transform: rotate(0deg) translateY(-150px); }
+  to { transform: rotate(360deg) translateY(-150px); }
 }
 
 @keyframes orbit-spin-reverse {
-  from {
-    transform: rotate(360deg) translateY(-118px);
-  }
+  from { transform: rotate(360deg) translateY(-118px); }
+  to { transform: rotate(0deg) translateY(-118px); }
+}
+/* ── 플로팅 nav ─────────────────────────────────── */
+.topbar-spacer {
+  height: 72px;
+  margin-bottom: 24px;
+}
 
-  to {
-    transform: rotate(0deg) translateY(-118px);
-  }
+.topbar-float {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 14px 48px;
+  background: rgba(251,250,247,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(63,81,181,0.1);
+  box-shadow: 0 2px 20px rgba(63,81,181,0.06);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.topbar-float.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── P 손글씨체 ─────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+/* cover-P removed */
+
+/* ── 자유롭게 떠다니는 floating orb ─────────────── */
+.floating-orbs-wrap {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.orb {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+  outline: none;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.orb:hover { transform: scale(1.25); }
+
+.orb.popping {
+  animation: orb-pump 0.45s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.orb-indigo {
+  background: radial-gradient(circle at 35% 35%, #6270d4, var(--indigo));
+  box-shadow: 0 6px 20px rgba(63,81,181,0.45), inset 0 -2px 6px rgba(0,0,0,0.15);
+}
+.orb-lime {
+  background: radial-gradient(circle at 35% 35%, #d8e85a, #9aab00);
+  box-shadow: 0 6px 20px rgba(154,171,0,0.45), inset 0 -2px 6px rgba(0,0,0,0.1);
+}
+.orb-pink {
+  background: radial-gradient(circle at 35% 35%, #ff80ab, var(--pink));
+  box-shadow: 0 6px 20px rgba(255,64,129,0.45), inset 0 -2px 6px rgba(0,0,0,0.1);
+}
+
+@keyframes orb-pump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.5); }
+  60%  { transform: scale(0.85); }
+  80%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ── 수채화 splash ──────────────────────────────── */
+.color-splash {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  transition: width 0.7s cubic-bezier(0.2,0.8,0.3,1),
+              height 0.7s cubic-bezier(0.2,0.8,0.3,1),
+              opacity 0.7s ease;
+  opacity: 0;
+  filter: blur(18px);
+}
+
+.color-splash.spreading {
+  width: 900px;
+  height: 900px;
+  opacity: 1;
+}
+
+.color-splash.fading {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* 기존 .topbar 는 유지 (다른 페이지에서 쓸 수도 있으니) */
+.topbar { display: none; }
+
+/* ── 프로필 일러스트 ─────────────────────────────── */
+.profile-identity {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+}
+
+.profile-illust-wrap {
+  flex-shrink: 0;
+  width: 140px;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+  bottom: 0;
+}
+
+.profile-illust {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(63,81,181,0.12));
 }
