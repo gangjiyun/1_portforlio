@@ -1185,3 +1185,161 @@ a {
   display: block;
   filter: drop-shadow(0 4px 12px rgba(63,81,181,0.12));
 }
+
+/* ── 프로젝트 카드 클릭 커서 ─────────────────────── */
+.project-clickable {
+  cursor: pointer;
+}
+
+.project-clickable:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 48px rgba(63,81,181,0.18);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.3s ease;
+}
+
+/* ── 프로젝트 모달 backdrop ──────────────────────── */
+.proj-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(15, 15, 30, 0.7);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.proj-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── 모달 본체 ───────────────────────────────────── */
+.proj-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  width: min(900px, 100%);
+  max-height: 90vh;
+  overflow: hidden;
+  transform: translateY(32px) scale(0.96);
+  transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+}
+
+.proj-modal-backdrop.active .proj-modal {
+  transform: translateY(0) scale(1);
+}
+
+.proj-modal-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+}
+
+/* 왼쪽 이미지 */
+.proj-modal-left {
+  background: #f3f3f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.proj-modal-img {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+}
+
+/* 오른쪽 텍스트 */
+.proj-modal-right {
+  padding: 52px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.proj-modal-num {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink);
+  font-weight: 700;
+  margin: 0;
+}
+
+.proj-modal-title {
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--indigo);
+  letter-spacing: -0.03em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.proj-modal-sub {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(63,81,181,0.1);
+}
+
+.proj-modal-desc {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin: 0;
+}
+
+/* 닫기 버튼 */
+.proj-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(63,81,181,0.15);
+  background: rgba(255,255,255,0.9);
+  color: var(--indigo);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.proj-modal-close:hover {
+  background: var(--indigo);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* 모바일 */
+@media (max-width: 640px) {
+  .proj-modal-inner {
+    grid-template-columns: 1fr;
+  }
+  .proj-modal-left {
+    max-height: 240px;
+  }
+  .proj-modal-right {
+    padding: 28px 24px;
+  }
+}
