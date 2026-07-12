@@ -211,7 +211,7 @@
 
           <div class="preview-row">
             <div class="rolling-track">
-              <article class="preview-card fade-card">
+              <article class="preview-card fade-card project-clickable" data-title="Pattern" data-sub="학교 패턴 디자인" data-num="01" data-img="assets/preview-school-pattern.jpg" data-full="assets/project-school-pattern.png" data-desc="교과 과정에서 진행한 학교 아이덴티티 패턴 디자인 프로젝트입니다. 미림마이스터고의 상징을 모티프로 한 반복 패턴을 개발했습니다.">
                 <div class="preview-badge">01</div>
                 <img src="assets/preview-school-pattern.jpg" alt="학교 패턴 디자인 미리보기">
                 <div class="preview-meta">
@@ -220,7 +220,7 @@
                 </div>
               </article>
 
-              <article class="preview-card preview-card-feature fade-card">
+              <article class="preview-card preview-card-feature fade-card project-clickable" data-title="GUI Component" data-sub="GUI컴포넌트" data-num="02" data-img="assets/preview-gui-component.jpg" data-full="assets/project-gui-component.png" data-desc="Brutalism, Material Design, Glassmorphism 세 가지 디자인 스타일을 동일한 메일 아이콘 컴포넌트에 적용해 비교 분석한 GUI 스타일 연구 프로젝트입니다.">
                 <div class="preview-badge">02</div>
                 <img src="assets/preview-gui-component.jpg" alt="GUI 컴포넌트 미리보기">
                 <div class="preview-meta">
@@ -229,7 +229,7 @@
                 </div>
               </article>
 
-              <article class="preview-card fade-card">
+              <article class="preview-card fade-card project-clickable" data-title="Career Poster" data-sub="진로 그래픽 및 포트폴리오" data-num="03" data-img="assets/포트.png" data-full="assets/포트.png" data-desc="진로 그래픽 및 포트폴리오 제작 수업에서 완성한 브랜드 디자인 포스터입니다. 나만의 브랜드 아이덴티티를 정의하고 시각화한 작업입니다.">
                 <div class="preview-badge">03</div>
                 <img src="assets/포트.png" alt="Career Poster 미리보기">
                 <div class="preview-meta">
@@ -238,7 +238,7 @@
                 </div>
               </article>
 
-              <article class="preview-card fade-card">
+              <article class="preview-card fade-card project-clickable" data-title="OTT System" data-sub="디자인 시스템 제작" data-num="04" data-img="assets/preview-ott-design-system.jpg" data-full="assets/project-ott-design-system.png" data-desc="디즈니플러스 OTT 서비스를 기반으로 Sidebar, Badge, Brand Hub Card 등 주요 컴포넌트를 포함한 디자인 시스템을 제작한 프로젝트입니다.">
                 <div class="preview-badge">04</div>
                 <img src="assets/preview-ott-design-system.jpg" alt="OTT 서비스 디자인 시스템 미리보기">
                 <div class="preview-meta">
@@ -477,5 +477,23 @@
       cards.forEach((card) => observer.observe(card));
     });
   </script>
+
+  <!-- 프로젝트 모달 -->
+  <div class="proj-modal-backdrop" id="projModalBackdrop" aria-hidden="true">
+    <div class="proj-modal" role="dialog" aria-modal="true">
+      <button class="proj-modal-close" id="projModalClose" aria-label="닫기">×</button>
+      <div class="proj-modal-inner">
+        <div class="proj-modal-left">
+          <img class="proj-modal-img" id="projModalImg" src="" alt="">
+        </div>
+        <div class="proj-modal-right">
+          <p class="proj-modal-num" id="projModalNum"></p>
+          <h2 class="proj-modal-title" id="projModalTitle"></h2>
+          <p class="proj-modal-sub" id="projModalSub"></p>
+          <p class="proj-modal-desc" id="projModalDesc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
