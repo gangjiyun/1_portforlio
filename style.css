@@ -1343,3 +1343,308 @@ a {
     padding: 28px 24px;
   }
 }
+
+/* ══════════════════════════════════════════════════
+   인트로 애니메이션 오버레이
+══════════════════════════════════════════════════ */
+#introOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #f7f6f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.6s ease;
+}
+
+#introOverlay.intro-fadeout {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+/* 타이틀 */
+.intro-title-wrap {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: introTitleIn 0.9s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+.intro-title {
+  font-family: "MaruBuri", Georgia, serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: #1a1a2e;
+  margin: 0;
+  line-height: 1;
+}
+
+.intro-subtitle {
+  font-size: 0.9rem;
+  color: #888;
+  letter-spacing: 0.12em;
+  margin: 10px 0 0;
+  text-transform: uppercase;
+}
+
+@keyframes introTitleIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 폴더 스택 컨테이너 */
+.intro-folders {
+  position: relative;
+  width: 340px;
+  height: 280px;
+}
+
+/* 공통 폴더 */
+.folder {
+  position: absolute;
+  bottom: 0;
+  width: 240px;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.15));
+}
+
+.folder-tab {
+  height: 22px;
+  width: 80px;
+  border-radius: 8px 8px 0 0;
+  margin-left: 16px;
+}
+
+.folder-body {
+  border-radius: 4px 12px 12px 12px;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.folder-year {
+  font-size: 2rem;
+  font-weight: 700;
+  opacity: 0.25;
+  letter-spacing: -0.04em;
+  color: #fff;
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+}
+
+/* 뒤 폴더들 */
+.folder-back-left {
+  left: 0;
+  bottom: 10px;
+  transform: rotate(-8deg);
+  transform-origin: bottom center;
+  animation: folderBobL 3s ease-in-out infinite;
+}
+.folder-back-left .folder-tab  { background: #f5845a; }
+.folder-back-left .folder-body { background: #f5845a; }
+
+.folder-back-right {
+  right: 0;
+  bottom: 4px;
+  transform: rotate(7deg);
+  transform-origin: bottom center;
+  animation: folderBobR 3.4s ease-in-out infinite;
+}
+.folder-back-right .folder-tab  { background: #9e9e9e; }
+.folder-back-right .folder-body { background: #b0b0b8; }
+
+.folder-mid {
+  left: 50%;
+  transform: translateX(-50%) rotate(3deg);
+  bottom: 6px;
+  animation: folderBobM 2.8s ease-in-out infinite;
+}
+.folder-mid .folder-tab  { background: #f5c842; }
+.folder-mid .folder-body { background: #f5c842; }
+
+/* 메인 폴더 */
+.folder-main {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  z-index: 5;
+  transform-origin: bottom center;
+  transition: transform 0.7s cubic-bezier(0.34,1.2,0.64,1);
+}
+.folder-main .folder-tab  { background: #3F51B5; width: 90px; }
+.folder-main .folder-body {
+  background: #3F51B5;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 폴더 열림 */
+.folder-main.folder-open {
+  transform: translateX(-50%) scale(1.06);
+}
+.folder-main.folder-open .folder-body {
+  border-radius: 4px 12px 12px 12px;
+}
+
+/* 메모지 */
+.folder-note {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-40%) translateY(60px);
+  background: #fff;
+  border-radius: 8px;
+  padding: 14px 18px;
+  width: 150px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  z-index: 4;
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.34,1.4,0.64,1), opacity 0.4s ease;
+}
+
+.folder-note.note-rise {
+  opacity: 1;
+  transform: translateX(-40%) translateY(0px) rotate(3deg);
+}
+
+.note-heading {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #3F51B5;
+  margin: 0 0 8px;
+}
+
+.folder-note p {
+  font-size: 0.72rem;
+  color: #555;
+  margin: 4px 0;
+}
+
+/* 폴더 안 미리보기 카드 */
+.folder-preview-card {
+  position: absolute;
+  inset: 8px;
+  background: #fff;
+  border-radius: 8px;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.34,1.4,0.64,1);
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.folder-preview-card.card-pop {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* 카드가 전체화면으로 확장 */
+.folder-preview-card.card-expand {
+  position: fixed;
+  inset: 0;
+  border-radius: 0;
+  z-index: 10000;
+  transform: scale(1);
+  transition: inset 0.6s cubic-bezier(0.77,0,0.175,1),
+              border-radius 0.6s ease;
+}
+
+.fpc-header {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.fpc-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.fpc-dot-red    { background: #ff5f57; }
+.fpc-dot-yellow { background: #febc2e; }
+.fpc-dot-green  { background: #28c840; }
+
+.fpc-typo {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1;
+  flex: 1;
+  align-items: center;
+}
+
+.fpc-outline {
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(1.4rem, 5vw, 2.8rem);
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #3F51B5;
+  letter-spacing: -0.04em;
+}
+
+.fpc-fill {
+  font-family: "MaruBuri", sans-serif;
+  font-size: clamp(1.4rem, 5vw, 2.8rem);
+  font-weight: 600;
+  color: #3F51B5;
+  letter-spacing: -0.04em;
+}
+
+.fpc-tags {
+  display: flex;
+  gap: 6px;
+}
+
+.fpc-tags span {
+  font-size: 0.6rem;
+  background: rgba(63,81,181,0.1);
+  color: #3F51B5;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+}
+
+/* 힌트 텍스트 */
+.intro-hint {
+  margin-top: 20px;
+  font-size: 0.78rem;
+  color: #aaa;
+  letter-spacing: 0.08em;
+  animation: hintPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* 폴더 둥둥 뜨는 애니메이션 */
+@keyframes folderBobL {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50%       { transform: rotate(-8deg) translateY(-8px); }
+}
+@keyframes folderBobR {
+  0%, 100% { transform: rotate(7deg) translateY(0); }
+  50%       { transform: rotate(7deg) translateY(-6px); }
+}
+@keyframes folderBobM {
+  0%, 100% { transform: translateX(-50%) rotate(3deg) translateY(0); }
+  50%       { transform: translateX(-50%) rotate(3deg) translateY(-10px); }
+}
