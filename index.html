@@ -50,6 +50,72 @@
   </style>
 </head>
 <body>
+
+  <!-- ── 인트로 애니메이션 오버레이 ───────────────── -->
+  <div id="introOverlay">
+    <div class="intro-scene">
+
+      <!-- 타이틀 -->
+      <div class="intro-title-wrap">
+        <h1 class="intro-title">Portfolio</h1>
+        <p class="intro-subtitle">2025 · Kang Ji Yun</p>
+      </div>
+
+      <!-- 폴더 스택 -->
+      <div class="intro-folders">
+        <!-- 뒤 폴더들 -->
+        <div class="folder folder-back-left">
+          <div class="folder-tab"></div>
+          <div class="folder-body"></div>
+        </div>
+        <div class="folder folder-back-right">
+          <div class="folder-tab"></div>
+          <div class="folder-body"></div>
+        </div>
+        <div class="folder folder-mid">
+          <div class="folder-tab"></div>
+          <div class="folder-body">
+            <span class="folder-year">2024</span>
+          </div>
+        </div>
+
+        <!-- 메인 앞 폴더 (열리면서 웹사이트 나옴) -->
+        <div class="folder folder-main" id="mainFolder">
+          <div class="folder-tab"></div>
+          <div class="folder-body">
+            <span class="folder-year">2025</span>
+            <!-- 폴더 안에서 나오는 미리보기 카드 -->
+            <div class="folder-preview-card" id="folderCard">
+              <div class="fpc-header">
+                <span class="fpc-dot fpc-dot-red"></span>
+                <span class="fpc-dot fpc-dot-yellow"></span>
+                <span class="fpc-dot fpc-dot-green"></span>
+              </div>
+              <div class="fpc-typo">
+                <span class="fpc-outline">Port</span>
+                <span class="fpc-fill">folio</span>
+              </div>
+              <div class="fpc-tags">
+                <span>Brand Design</span>
+                <span>2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 메모지 (폴더 안에서 삐죽) -->
+        <div class="folder-note" id="folderNote">
+          <p class="note-heading">PORTFOLIO 2025</p>
+          <p>학교 패턴 디자인</p>
+          <p>GUI 컴포넌트</p>
+          <p>OTT 디자인 시스템</p>
+        </div>
+      </div>
+
+      <p class="intro-hint">클릭해서 열기</p>
+    </div>
+  </div>
+
   <div class="cursor-ring" aria-hidden="true"></div>
 
   <!-- 플로팅 nav: 히어로 벗어나면 나타남 -->
@@ -357,6 +423,57 @@
   </div>
   
   <script>
+
+    // ── 인트로 애니메이션 ────────────────────────────
+    (function() {
+      const overlay  = document.getElementById('introOverlay');
+      const folder   = document.getElementById('mainFolder');
+      const card     = document.getElementById('folderCard');
+      const note     = document.getElementById('folderNote');
+      if (!overlay) return;
+
+      let triggered = false;
+
+      function runIntro() {
+        if (triggered) return;
+        triggered = true;
+
+        // 1. 메모지 위로 슬쩍 올라옴
+        note.classList.add('note-rise');
+
+        // 2. 폴더 열림 (앞면 flip)
+        setTimeout(() => {
+          folder.classList.add('folder-open');
+        }, 600);
+
+        // 3. 미리보기 카드 팝
+        setTimeout(() => {
+          card.classList.add('card-pop');
+        }, 1100);
+
+        // 4. 카드가 전체화면으로 확장
+        setTimeout(() => {
+          card.classList.add('card-expand');
+        }, 1700);
+
+        // 5. 오버레이 페이드 아웃 → 실제 페이지 드러남
+        setTimeout(() => {
+          overlay.classList.add('intro-fadeout');
+        }, 2400);
+
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 3000);
+      }
+
+      // 클릭 or 일정 시간 후 자동 시작
+      overlay.addEventListener('click', runIntro);
+      setTimeout(runIntro, 2200);
+
+      document.body.style.overflow = 'hidden';
+    })();
+
     // ── 플로팅 nav: 히어로 섹션 벗어나면 나타남
     const floatNav = document.getElementById('topbar-float');
     const heroSection = document.getElementById('home');
